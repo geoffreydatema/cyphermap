@@ -73,24 +73,6 @@ def bdecode(data):
             break
     return result
 
-def initAccountFile(username):
-    account = {
-        "username": username,
-        "level": "1"
-    }
-    return account
-
-def save(data, key, path):
-    hashword = minihash(key)
-    encrypted_data = stepcrypt(jdump(data), hashword)
-    fwritebytes(encrypted_data, rf"{path}\{data["username"]}.txt")
-    writeCyphermap(bencode(str(encrypted_data)[2:-1]), data["username"], r"C:\Working\mindspawn\data")
-
-def loadSaveFile(path, key):
-    hashword = minihash(key)
-    decrypted_data = jparse(destepcrypt(freadbytes(path), hashword))
-    return decrypted_data
-
 def loadCyphermap(path, key):
     hashword = minihash(key)
     decrypted_data = jparse(destepcrypt(bdecode(readCyphermap(path)), hashword))
